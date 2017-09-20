@@ -33,5 +33,5 @@ resource "aws_instance" "backend_services" {
   }
   key_name = "${aws_key_pair.auth.id}"
   vpc_security_group_ids = ["${aws_security_group.backend_services.id}"]
-  subnet_id = "${aws_subnet.public.id}"
+  subnet_id = "${aws_subnet.private.id}"
 }
