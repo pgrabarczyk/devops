@@ -1,4 +1,8 @@
 # devops
+Examples of using devops tools like terraform and ansible.
+
+## Warning!
+Examples using Amazon Web Services creating services that can generate costs.
 
 ### Visualization / Draw
 To see draw of project open:
