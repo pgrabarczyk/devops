@@ -17,21 +17,28 @@ data "aws_ami" "ubuntu" {
 resource "aws_instance" "jump_service" {
   instance_type = "${var.ec2_instance_type}"
   ami = "${data.aws_ami.ubuntu.id}"
-  tags {
-    Name = "${var.appname}_jump_service"
-  }
   key_name = "${aws_key_pair.auth.id}"
   vpc_security_group_ids = ["${aws_security_group.jump_service.id}"]
   subnet_id = "${aws_subnet.public.id}"
+
+  tags {
+    Name = "${var.appname}_jump_service"
+  }
 }
 
 resource "aws_instance" "backend_services" {
   instance_type = "${var.ec2_instance_type}"
   ami = "${data.aws_ami.ubuntu.id}"
-  tags {
-    Name = "${var.appname}_backend_services"
-  }
   key_name = "${aws_key_pair.auth.id}"
   vpc_security_group_ids = ["${aws_security_group.backend_services.id}"]
   subnet_id = "${aws_subnet.private.id}"
+
+  tags {
+    Name = "${var.appname}_backend_services"
+  }
+
+  provisioner "local-exec" {
+    command = "echo \"[jump_service]\n${aws_instance.jump_service.public_ip}\n[jump_service:vars]\nansible_python_interpreter=/usr/bin/python3\" > ../ansible/jump_service.host"
+  }
+
 }
