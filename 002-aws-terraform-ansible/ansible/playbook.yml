@@ -20,9 +20,7 @@
     java_home_path: "/opt/java"
     jdk_url: "http://download.oracle.com/otn-pub/java/jdk/8u144-b01/090f390dda5b47b9b721c7dfaa008135/jdk-8u144-linux-x64.tar.gz"
     jdk_tar_path: "/usr/src/jdk-8u144-linux-x64.tar.gz"
-  environment:
-    JAVA_HOME: "{{ java_home_path }}"
-    PATH: "$PATH:$JAVA_HOME/bin"
+    java_home_script_path: "/etc/profile.d/java_home.sh"
   tasks:
     - name: install packages
       apt:
@@ -32,17 +30,40 @@
         - htop
         - wget
         - unzip
+    - name: "Check {{ java_home_path }} exists"
+      stat:
+        path: "{{ java_home_path }}"
+      register: java_home_result
     - name: Download JDK
       get_url:
         url: " {{ jdk_url }}"
         dest: "{{ jdk_tar_path }}"
         validate_certs: no
         headers: 'Cookie: oraclelicense=accept-securebackup-cookie'
-    - name: "create {{ java_home_path }} for jdk"
+      when: java_home_result.stat.exists == False
+    - name: "Create {{ java_home_path }} for jdk"
       file: path={{ java_home_path }} state=directory
-    - unarchive:
+      when: java_home_result.stat.exists == False
+    - name: "Install JDK in {{ java_home_path }}"
+      unarchive:
         src: "{{ jdk_tar_path }}"
         dest: "{{ java_home_path }}"
         remote_src: yes
         owner: "{{ username }}"
         group: "{{ username }}"
+      when: java_home_result.stat.exists == False
+    - name: "Check is java_home script exists"
+      stat:
+        path: "{{ java_home_script_path }}"
+      register: java_home_script
+    - name: "Update JAVA_HOME and PATH environments varriable"
+      blockinfile:
+        create: yes
+        path: "{{ java_home_script_path }}"
+        mode: "+x"
+        marker: ""
+        block: |
+          #!/bin/sh
+          export JAVA_HOME=/opt/java
+          export PATH=$JAVA_HOME/bin:$PATH
+      when: java_home_script.stat.exists == False
