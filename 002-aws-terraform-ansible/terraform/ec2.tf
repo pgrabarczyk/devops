@@ -38,7 +38,23 @@ resource "aws_instance" "backend_services" {
   }
 
   provisioner "local-exec" {
-    command = "echo \"[jump_service]\n${aws_instance.jump_service.public_ip}\n[jump_service:vars]\nansible_python_interpreter=/usr/bin/python3\" > ../ansible/jump_service.host"
+    command = <<EOP
+cat > ../ansible/all.host <<'EOF'
+[jump_service]
+${aws_instance.jump_service.public_ip}
+[jump_service:vars]
+ansible_python_interpreter=/usr/bin/python3
+[backend_services]
+${aws_instance.backend_services.private_ip}
+[backend_services:vars]
+ansible_python_interpreter=/usr/bin/python3
+ansible_ssh_common_args='-o ProxyCommand=\"ssh -W %h:%p -q ubuntu@${aws_instance.jump_service.public_ip}\"'
+EOF
+EOP
   }
+
+#  provisioner "local-exec" {
+#    command = "echo \"[jump_service]\n${aws_instance.jump_service.public_ip}\n[jump_service:vars]\nansible_python_interpreter=/usr/bin/python3\" > ../ansible/jump_service.host"
+#  }
 
 }
