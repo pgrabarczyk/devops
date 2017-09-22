@@ -2,6 +2,7 @@
 *.tfstate
 *.backup
 *.terraform
+*.info
 
 # Ansible
 *.retry
