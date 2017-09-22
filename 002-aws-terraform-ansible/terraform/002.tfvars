@@ -13,3 +13,9 @@ public_key_path="/home/patryk/.ssh/pgrabarczyk-sandbox.pub"
 
 #ec2
 ec2_instance_type="t2.micro"
+
+#elb
+elb_healthy_threshold="2"
+elb_unhealthy_threshold="2"
+elb_timeout="3"
+elb_interval="30"

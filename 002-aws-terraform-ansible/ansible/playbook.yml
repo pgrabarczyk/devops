@@ -53,6 +53,7 @@
         remote_src: yes
         owner: "{{ username }}"
         group: "{{ username }}"
+        extra_opts: [--strip-components=1]
       when: java_home_result.stat.exists == False
     - name: "Check is java_home script exists"
       stat:

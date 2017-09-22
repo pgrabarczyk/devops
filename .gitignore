@@ -1,6 +1,8 @@
-# Compiled files
+# Terraform
 *.tfstate
-*.tfstate.backup
+*.backup
+*.terraform
 
-# Module directory
-.terraform/
+# Ansible
+*.retry
+*.host

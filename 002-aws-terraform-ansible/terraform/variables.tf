@@ -13,3 +13,9 @@ variable "public_key_path" {}
 
 #ec2
 variable "ec2_instance_type" {}
+
+#elb
+variable "elb_healthy_threshold" {}
+variable "elb_unhealthy_threshold" {}
+variable "elb_timeout" {}
+variable "elb_interval" {} 

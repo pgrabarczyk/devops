@@ -1,7 +1,0 @@
-# Terraform
-*.tfstate
-*.backup
-
-# Ansible
-*.retry
-*.host

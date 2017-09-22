@@ -26,7 +26,7 @@ resource "aws_instance" "jump_service" {
   }
 }
 
-resource "aws_instance" "backend_services" {
+resource "aws_instance" "backend_service1" {
   instance_type = "${var.ec2_instance_type}"
   ami = "${data.aws_ami.ubuntu.id}"
   key_name = "${aws_key_pair.auth.id}"
@@ -34,7 +34,31 @@ resource "aws_instance" "backend_services" {
   subnet_id = "${aws_subnet.private.id}"
 
   tags {
-    Name = "${var.appname}_backend_services"
+    Name = "${var.appname}_backend_service1"
+  }
+}
+
+resource "aws_instance" "backend_service2" {
+  instance_type = "${var.ec2_instance_type}"
+  ami = "${data.aws_ami.ubuntu.id}"
+  key_name = "${aws_key_pair.auth.id}"
+  vpc_security_group_ids = ["${aws_security_group.backend_services.id}"]
+  subnet_id = "${aws_subnet.private.id}"
+
+  tags {
+    Name = "${var.appname}_backend_service2"
+  }
+}
+
+resource "aws_instance" "backend_service3" {
+  instance_type = "${var.ec2_instance_type}"
+  ami = "${data.aws_ami.ubuntu.id}"
+  key_name = "${aws_key_pair.auth.id}"
+  vpc_security_group_ids = ["${aws_security_group.backend_services.id}"]
+  subnet_id = "${aws_subnet.private.id}"
+
+  tags {
+    Name = "${var.appname}_backend_service3"
   }
 
   provisioner "local-exec" {
@@ -45,7 +69,9 @@ ${aws_instance.jump_service.public_ip}
 [jump_service:vars]
 ansible_python_interpreter=/usr/bin/python3
 [backend_services]
-${aws_instance.backend_services.private_ip}
+${aws_instance.backend_service1.private_ip}
+${aws_instance.backend_service2.private_ip}
+${aws_instance.backend_service3.private_ip}
 [backend_services:vars]
 ansible_python_interpreter=/usr/bin/python3
 ansible_ssh_common_args='-o ProxyCommand=\"ssh -W %h:%p -q ubuntu@${aws_instance.jump_service.public_ip}\"'
