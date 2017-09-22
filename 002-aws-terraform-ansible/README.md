@@ -1,8 +1,21 @@
 # 002-aws-terraform-ansible
-Create aws env with terraform then execute ansible scripts to create 3 backend services with java running application.
-Load balancer will balance traffic between those 3 backend services.
 
 ![draw_002](https://github.com/pgrabarczyk/devops/raw/master/002-aws-terraform-ansible/img/draw.PNG)
+
+Terraform will build AWS environtment and prepare all.host file (for ansible).
+
+Ansible will update cache for all hosts (jump server and backend services), then download, install JDK, then run java application.
+
+Source of java application can be found [here](https://github.com/pgrabarczyk/spring-boot)
+
+
+Backend services ran java application that shows their local ip using HTTP:8080 GET on path: /host .
+
+Backend services are inside private subnet, they can download updates using NAT gateway, but they can't be reachable using public ip.
+
+Jump Service is inside public subnet and it's used only to install application on backend services.
+
+Load balancer is used to check results of java application on backend services and it's public accessible via DNS.
 
 ## Execute:
 ```
