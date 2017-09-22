@@ -12,8 +12,8 @@ resource "aws_security_group" "jump_service" {
   }
   #ICMP
   ingress {
-    from_port = 8
-    to_port = 0
+    from_port = "-1"
+    to_port = "-1"
     protocol = "icmp"
     cidr_blocks = ["${var.devCIDR}"]
   }
@@ -36,15 +36,15 @@ resource "aws_security_group" "elb" {
 
   #HTTP 80
   ingress {
-    from_port = 80
-    to_port = 80
+    from_port = 0
+    to_port = 65535
     protocol = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
   #ICMP
   ingress {
-    from_port = 8
-    to_port = 0
+    from_port = "-1"
+    to_port = "-1"
     protocol = "icmp"
     cidr_blocks = ["${var.devCIDR}"]
   }
@@ -74,8 +74,8 @@ resource "aws_security_group" "backend_services" {
   }
   #ICMP
   ingress {
-    from_port = 8
-    to_port = 0
+    from_port = "-1"
+    to_port = "-1"
     protocol = "icmp"
     security_groups = ["${aws_security_group.jump_service.id}"]
   }

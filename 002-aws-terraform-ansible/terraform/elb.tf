@@ -1,6 +1,6 @@
 resource "aws_elb" "elb" {
     name = "${var.appname}-elb"
-    subnets = [ "${aws_subnet.public.id}", "${aws_subnet.private.id}" ]
+    subnets = [  "${aws_subnet.public.id}", "${aws_subnet.private.id}" ]
     security_groups = [ "${aws_security_group.elb.id}" ]
 
     cross_zone_load_balancing = true
