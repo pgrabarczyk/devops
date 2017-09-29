@@ -1,6 +1,6 @@
 # 004-aws-terraform-modules
 
-![draw_004](https://github.com/pgrabarczyk/devops/raw/master/004-aws-terraform-modules/img/draw.PNG)
+![draw_004](https://github.com/pgrabarczyk/devops/raw/master/004-aws-terraform-modules/img/draw.png)
 
 Idea is to build development env where instances from test and development env can ran.
 
