@@ -1,6 +1,7 @@
 #!/bin/bash
 TAG_NAME='pgrabarczyk'
-TERRAFORM_VARS="-var tag_name=$TAG_NAME --var-file=vars.tfvars"
+VAR_FILE='vars.tfvars'
+TERRAFORM_VARS="-var tag_name=$TAG_NAME --var-file=$VAR_FILE"
 
 set +e
 #set -x
