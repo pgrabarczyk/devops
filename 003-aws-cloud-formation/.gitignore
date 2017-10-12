@@ -1,0 +1,9 @@
+# Terraform
+*.tfstate
+*.backup
+*.terraform
+*.info
+
+# Ansible
+*.retry
+*.host
