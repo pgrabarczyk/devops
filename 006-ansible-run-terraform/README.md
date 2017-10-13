@@ -2,21 +2,24 @@
 
 Idea is to execute terraform script via ansible.
 
-## Variables to edit
+## Execute
+
+First, update variables:
+
 terraform_execute_dir in:
 - terraform_create.yml
 - terraform_destroy.yml
 
 terraform/vars.tfvars - credientials to your terraform
 
-## Execute
+Then you can execute:
 
 ```
 ansible-playbook terraform_create.yml -i local.host -vvv
 ansible-playbook terraform_destroy.yml -i local.host -vvv
 ```
 
-## Runned on configuration:
+## Executed on configuration:
 ```
 Terraform v0.10.7
 ansible 2.4.0.0
