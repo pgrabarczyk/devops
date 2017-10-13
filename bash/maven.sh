@@ -1,5 +1,5 @@
 #!/bin/bash
-# Script should download, install MAVEN
+# Script should download, install MAVEN and add it to PATH
 
 # Required parameters
 MAVEN_HOME="/opt/maven"
