@@ -1,0 +1,29 @@
+---
+  - hosts: all
+    remote_user: pgrabarczyk
+    connection: local
+    gather_facts: yes
+    vars:
+      terraform_execute_dir: "/home/pgrabarczyk/git/devops/006-ansible-run-terraform/terraform"
+      terraform_var_file: 'vars.tfvars'
+      terraform_vars: "-var tag_name=pgrabarczyk --var-file={{ terraform_var_file }}"
+      terraform_plan_out_file: 'plan.out'
+      terraform_state_filename: 'terraform.tfstate'
+      terraform_state_path: "{{ terraform_execute_dir }}/{{ terraform_state_filename }}"
+    tasks:
+
+        - name: Check if state file exists
+          stat:
+            path: "{{ terraform_state_path }}"
+          register: tfstate
+        - fail:
+            msg: "File not exists or cannot access: {{ terraform_state_path }}"
+          when: tfstate.stat.islnk is not defined
+
+        - name: destroy
+          shell: "terraform destroy --force {{ terraform_vars }}"
+          args:
+            chdir: "{{ terraform_execute_dir }}"
+          register: terraform_destory
+
+        - debug: msg={{ terraform_destory.stdout }}

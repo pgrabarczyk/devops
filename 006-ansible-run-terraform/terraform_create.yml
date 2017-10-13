@@ -1,0 +1,33 @@
+---
+  - hosts: all
+    remote_user: pgrabarczyk
+    connection: local
+    gather_facts: yes
+    vars:
+      terraform_execute_dir: "/home/pgrabarczyk/git/devops/006-ansible-run-terraform/terraform"
+      terraform_var_file: 'vars.tfvars'
+      terraform_vars: "-var tag_name=pgrabarczyk --var-file={{ terraform_var_file }}"
+      terraform_plan_out_file: 'plan.out'
+      terraform_state_filename: 'terraform.tfstate'
+      terraform_state_path: "{{ terraform_execute_dir }}/{{ terraform_state_filename }}"
+    tasks:
+      - name: Terraform apply if changes found
+        block:
+        - name: init
+          command: terraform init
+          args:
+            chdir: "{{ terraform_execute_dir }}"
+
+        - name: plan
+          command: "terraform plan -out={{ terraform_plan_out_file }} {{ terraform_vars }} -detailed-exitcode -state={{ terraform_state_path }}"
+          args:
+            chdir: "{{ terraform_execute_dir }}"
+          register: terraform_plan
+          failed_when: terraform_plan.rc == 1
+
+        - name: apply
+          command: "terraform apply {{ terraform_plan_out_file }}"
+          args:
+            chdir: "{{ terraform_execute_dir }}"
+          register: terraform_apply
+          when: terraform_plan.rc == 2 #Changes found
