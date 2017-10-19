@@ -1,0 +1,23 @@
+---
+- hosts: service
+  become: yes
+  remote_user: ubuntu
+  become_method: sudo
+  connection: ssh
+  gather_facts: yes
+  vars:
+    username: "ubuntu"
+    java_home_path: "/opt/java"
+    jar_local_path: "../app/spring-cloud-sleuth-scheduler.jar"
+    jar_remote_path: "/home/ubuntu/spring-cloud-sleuth-scheduler.jar"
+  tasks:
+    - name: "Copy JAR file"
+      copy:
+        src: "{{ jar_local_path }}"
+        dest: "{{ jar_remote_path }}"
+        owner: "{{ username }}"
+        group: "{{ username }}"
+        mode: 0700
+      register: copy_jar_result
+    - name: "Execute JAR file"
+      command: "/usr/bin/screen -d -m {{ java_home_path }}/bin/java -jar {{ jar_remote_path }}"
