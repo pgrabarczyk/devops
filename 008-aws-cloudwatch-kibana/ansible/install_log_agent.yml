@@ -1,0 +1,45 @@
+---
+- hosts: service
+  become: yes
+  remote_user: ubuntu
+  become_method: sudo
+  connection: ssh
+  gather_facts: yes
+  vars:
+    username: "ubuntu"
+    log_file: /home/ubuntu/logs/spring-cloud-sleuth-cloudwatch.log
+    log_format: "%b %d %H:%M:%S"
+    log_group_name: pgrabarczyk-lg
+    log_stream_name: pgrabarczyk-ls
+    log_tmp_conf_path: "/tmp/awslogs.conf"
+    log_tmp_agent_setup_path: "/tmp/awslogs-agent-setup.py"
+    region: "eu-west-1"
+  tasks:
+  - name: Set up conf file
+    template:
+      dest: "{{ log_tmp_conf_path }}"
+      owner: root
+      group: root
+      mode: 0600
+      src: awslogs.conf
+
+  - name: Download the awslogs-agent-setup.py script
+    get_url:
+      dest: "{{ log_tmp_agent_setup_path }}"
+      owner: root
+      group: root
+      mode: 0600
+      url: https://s3.amazonaws.com/aws-cloudwatch/downloads/latest/awslogs-agent-setup.py
+
+  - name: Install the AWS CloudWatch Logs daemon
+    shell: "python3 {{ log_tmp_agent_setup_path }} -n -r {{ region }} -c {{ log_tmp_conf_path }}"
+
+  - name: Remove conf file
+    file:
+      path: "{{ log_tmp_conf_path }}"
+      state: absent
+
+  - name: Remove setup file
+    file:
+      path: "{{ log_tmp_agent_setup_path }}"
+      state: absent

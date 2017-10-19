@@ -1,7 +1,32 @@
 # 008-aws-cloudwatch-kibana
 
+### Project in progress / TODO:
+
+- Cloudwatch update logs format from this:
+```
+[2m2017-10-19 17:16:59.626[0;39m [32mDEBUG [bootstrap,42d7e84dc81103d9,42d7e84dc81103d9,false][0;39m [35m2630[0;39m [2m---[0;39m [2m[pool-2-thread-1][0;39m [36mc.p.s.c.s.scheduler.service.LogService [0;39m [2m:[0;39m Hello! Current date/time is 2017-10-19T17:16:59.626
+```
+- Cloudwatch update log date format
+- Cloudwatch screen shoot in readme
+- Add elasticsearch in terraform
+- results of elasticsearch (screenshoot?) in readme
+- refactor ansible playbook
+- refactor to keep ansible and terraform settings (eg. region in 1 file)
+
 ### Execute (fast):
-//TODO
+
+```
+cd terraform
+terraform init
+terraform plan -var-file=008.tfvars -out=plan.out
+terraform apply plan.out
+
+cd ../ansible/
+ansible-playbook -i all.host ubuntu_update.yml -vvvvv
+ansible-playbook -i all.host install_jdk_ubuntu.yml -vvvvv
+ansible-playbook -i all.host copy_and_execute_jar.yml -vvvvv
+ansible-playbook -i all.host install_log_agent.yml -vvvvv
+```
 
 ### Execute (step by step) with explanation:
 
@@ -51,9 +76,7 @@ ansible-playbook -i all.host ubuntu_update.yml -vvvvv
 ansible-playbook -i all.host install_jdk_ubuntu.yml -vvvvv
 ```
 
-###### Ansible install agent for sending logs to cloudwatch
-//TODO
-###### Ansible execute send and execute java application generating logs.
+###### Ansible execute send and execute java application generating logs
 
 ```
 ansible-playbook -i all.host copy_and_execute_jar.yml -vvvvv
@@ -66,11 +89,25 @@ Logs should be at:
 /home/ubuntu/logs/spring-cloud-sleuth-scheduler.log
 ```
 
-###### Check cloud watch
-//TODO
-###### TODO Kibana
-//TODO
+###### Ansible install agent for sending logs to cloudwatch
 
+```
+ansible-playbook -i all.host install_log_agent.yml -vvvvv
+```
+
+
+### Clean up (Destroy AWS environment)
+```
+cd ../terraform
+terraform destroy -var-file=002.tfvars
+```
+
+## Runned on configuration:
+```
+Terraform v0.10.7
+ansible 2.4.0.0
+python version = 2.7.12 (default, Nov 19 2016, 06:48:10) [GCC 5.4.0 20160609]
+```
 
 ### Troubleshooting
 
