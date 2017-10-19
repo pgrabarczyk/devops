@@ -3,6 +3,7 @@
 *.backup
 *.terraform
 *.info
+*.out
 
 # Ansible
 *.retry
