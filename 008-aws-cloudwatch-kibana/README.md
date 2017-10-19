@@ -3,10 +3,40 @@
 ### Execute (step by step):
 
 ###### Terraform creates EC2 IAM ROLE, EC2, CloudWatch LogGroup, CloudWatch LogStream
-//TODO
+```
+cd terraform
+terraform init
+terraform plan -var-file=008.tfvars -out=plan.out
+terraform apply plan.out
+```
+
+Terraform will create IAM Role for EC2 with policy:
+```
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "logs:CreateLogGroup",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents",
+        "logs:DescribeLogStreams"
+      ],
+      "Resource": "arn:aws:logs:*:*:*"
+    }
+  ]
+}
+```
+
+That's why to execute this terraform your user need to have role:
+```
+iam:CreateRole
+```
+
 ###### Ansible install java
 //TODO
-###### Ansible install agent for sedning logs to cloudwatch
+###### Ansible install agent for sending logs to cloudwatch
 //TODO
 ###### Ansible execute send and execute java application generating logs.
 
