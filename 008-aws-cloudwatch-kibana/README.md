@@ -30,7 +30,7 @@ ansible-playbook -i all.host install_log_agent.yml -vvvvv
 
 ### Execute (step by step) with explanation:
 
-###### Terraform creates EC2 IAM ROLE, EC2, CloudWatch LogGroup, CloudWatch LogStream
+##### Terraform creates EC2 IAM ROLE, EC2, CloudWatch LogGroup, CloudWatch LogStream
 ```
 cd terraform
 terraform init
@@ -65,18 +65,18 @@ iam:CreateRole
 Notice that terraform generate ../ansible/all.host file with public IP of EC2.
 It will be used in next step for ansible.
 
-###### Ansible update ubuntu repository
+##### Ansible update ubuntu repository
 ```
 cd ../ansible/
 ansible-playbook -i all.host ubuntu_update.yml -vvvvv
 ```
 
-###### Ansible install java
+##### Ansible install java
 ```
 ansible-playbook -i all.host install_jdk_ubuntu.yml -vvvvv
 ```
 
-###### Ansible execute send and execute java application generating logs
+##### Ansible execute send and execute java application generating logs
 
 ```
 ansible-playbook -i all.host copy_and_execute_jar.yml -vvvvv
@@ -89,7 +89,7 @@ Logs should be at:
 /home/ubuntu/logs/spring-cloud-sleuth-scheduler.log
 ```
 
-###### Ansible install agent for sending logs to cloudwatch
+##### Ansible install agent for sending logs to cloudwatch
 
 ```
 ansible-playbook -i all.host install_log_agent.yml -vvvvv
@@ -111,7 +111,7 @@ python version = 2.7.12 (default, Nov 19 2016, 06:48:10) [GCC 5.4.0 20160609]
 
 ### Troubleshooting
 
-###### "Permission denied (publickey)." when SSH to EC2
+##### "Permission denied (publickey)." when SSH to EC2
 I generated ssh key using
 ```
 ssh-keygen
