@@ -2,12 +2,6 @@
 
 ### Project in progress / TODO:
 
-- Cloudwatch update logs format from this:
-```
-[2m2017-10-19 17:16:59.626[0;39m [32mDEBUG [bootstrap,42d7e84dc81103d9,42d7e84dc81103d9,false][0;39m [35m2630[0;39m [2m---[0;39m [2m[pool-2-thread-1][0;39m [36mc.p.s.c.s.scheduler.service.LogService [0;39m [2m:[0;39m Hello! Current date/time is 2017-10-19T17:16:59.626
-```
-- Cloudwatch update log date format
-- Cloudwatch screen shoot in readme
 - Add elasticsearch in terraform
 - results of elasticsearch (screenshoot?) in readme
 - refactor ansible playbook
@@ -79,7 +73,7 @@ ansible-playbook -i all.host install_jdk_ubuntu.yml -vvvvv
 ansible-playbook -i all.host copy_and_execute_jar.yml -vvvvv
 ```
 
-Source of java application can be found [here](https://github.com/pgrabarczyk/spring-cloud/tree/master/spring-cloud-sleuth-scheduler)
+Source of java application can be found [here](https://github.com/pgrabarczyk/devops/raw/master/008-aws-cloudwatch-kibana/img/cloudwatch.png)
 
 Logs should be at:
 ```
@@ -92,6 +86,9 @@ Logs should be at:
 ansible-playbook -i all.host install_log_agent.yml -vvvvv
 ```
 
+##### Logs in cloudwatch
+Now you should be able to see logs using AWS console in Cloudwatch.
+![cloudwatch](https://github.com/pgrabarczyk/devops/raw/master/008-aws-terraform-ansible/img/cloudwatch.png)
 
 ### Clean up (Destroy AWS environment)
 ```
