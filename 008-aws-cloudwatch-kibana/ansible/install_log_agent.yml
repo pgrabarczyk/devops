@@ -8,7 +8,7 @@
   vars:
     username: "ubuntu"
     log_file: /home/ubuntu/logs/spring-cloud-sleuth-cloudwatch.log
-    log_format: "%b %d %H:%M:%S"
+    log_format: "%Y-%m-%d %H:%M:%S.%f" #2017-10-20 12:20:58.123456
     log_group_name: pgrabarczyk-lg
     log_stream_name: pgrabarczyk-ls
     log_tmp_conf_path: "/tmp/awslogs.conf"
