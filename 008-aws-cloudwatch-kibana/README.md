@@ -73,7 +73,7 @@ ansible-playbook -i all.host install_jdk_ubuntu.yml -vvvvv
 ansible-playbook -i all.host copy_and_execute_jar.yml -vvvvv
 ```
 
-Source of java application can be found [here](https://github.com/pgrabarczyk/devops/raw/master/008-aws-cloudwatch-kibana/img/cloudwatch.png)
+Source of java application can be found [here](https://github.com/pgrabarczyk/spring-cloud/tree/master/spring-cloud-sleuth-scheduler)
 
 Logs should be at:
 ```
@@ -88,7 +88,7 @@ ansible-playbook -i all.host install_log_agent.yml -vvvvv
 
 ##### Logs in cloudwatch
 Now you should be able to see logs using AWS console in Cloudwatch.
-![cloudwatch](https://github.com/pgrabarczyk/devops/raw/master/008-aws-terraform-ansible/img/cloudwatch.png)
+![cloudwatch](https://github.com/pgrabarczyk/devops/raw/master/008-aws-cloudwatch-kibana/img/cloudwatch.png)
 
 ### Clean up (Destroy AWS environment)
 ```
