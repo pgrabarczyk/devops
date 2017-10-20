@@ -22,10 +22,7 @@ terraform plan -var-file=008.tfvars -out=plan.out
 terraform apply plan.out
 
 cd ../ansible/
-ansible-playbook -i all.host ubuntu_update.yml -vvvvv
-ansible-playbook -i all.host install_jdk_ubuntu.yml -vvvvv
-ansible-playbook -i all.host copy_and_execute_jar.yml -vvvvv
-ansible-playbook -i all.host install_log_agent.yml -vvvvv
+ansible-playbook -i all.host all.yml -vvvvv
 ```
 
 ### Execute (step by step) with explanation:
