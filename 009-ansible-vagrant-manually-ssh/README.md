@@ -1,4 +1,4 @@
-#009-ansible-vagrant-manually-ssh
+# 009-ansible-vagrant-manually-ssh
 
 Example of connect to vagrant VM using ansible outside Vagrantfile.
 
