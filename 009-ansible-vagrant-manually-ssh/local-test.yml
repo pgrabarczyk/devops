@@ -1,0 +1,7 @@
+---
+- hosts: vagrant
+  remote_user: ubuntu
+  tasks:
+  - shell: uname -a
+    register: uname_result
+  - debug: msg="{{ uname_result.stdout }}"
