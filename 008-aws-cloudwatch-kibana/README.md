@@ -75,7 +75,7 @@ ansible-playbook -i all.host copy_and_execute_jar.yml -vvvvv
 
 Source of java application can be found [here](https://github.com/pgrabarczyk/spring-cloud/tree/master/spring-cloud-sleuth-scheduler)
 
-Logs should be at:
+Logs should be in:
 ```
 /home/ubuntu/logs/spring-cloud-sleuth-scheduler.log
 ```
