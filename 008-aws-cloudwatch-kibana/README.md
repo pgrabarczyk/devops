@@ -93,7 +93,7 @@ Now you should be able to see logs using AWS console in Cloudwatch.
 ### Clean up (Destroy AWS environment)
 ```
 cd ../terraform
-terraform destroy -var-file=002.tfvars
+terraform destroy -var-file=008.tfvars
 ```
 
 ## Runned on configuration:
