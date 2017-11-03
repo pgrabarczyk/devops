@@ -83,7 +83,7 @@ Logs should be in:
 ##### Ansible install agent for sending logs to cloudwatch
 
 ```
-ansible-playbook -i all.host install_log_agent.yml -vvvvv
+ansible-playbook -i all.host install_log_agent.yml -vvvv
 ```
 
 ##### Logs in cloudwatch
