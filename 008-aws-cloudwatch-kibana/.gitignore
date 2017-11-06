@@ -8,3 +8,6 @@
 # Ansible
 *.retry
 *.host
+
+# Shell
+ansible/script/aws_ec2_wait.sh

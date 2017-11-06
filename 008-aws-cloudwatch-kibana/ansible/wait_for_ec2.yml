@@ -1,0 +1,7 @@
+---
+- hosts: all
+  connection: local
+  gather_facts: no
+  tasks:
+    - name: Wait for ec2 status
+      script: script/aws_ec2_wait.sh

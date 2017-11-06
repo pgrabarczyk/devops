@@ -26,6 +26,7 @@ resource "aws_instance" "service" {
     Name = "${var.appname}-service"
   }
 
+  # Generate all.host for ansible
   provisioner "local-exec" {
     command = <<EOP
 cat > ../ansible/all.host <<'EOF'
@@ -35,6 +36,23 @@ ${aws_instance.service.public_ip}
 ansible_python_interpreter=/usr/bin/python3
 EOF
 EOP
+  }
+
+  # Generate aws_ec2_wait.sh for wait to initialize this instance
+  provisioner "local-exec" {
+    command = <<EOP
+cat > ../ansible/script/aws_ec2_wait.sh <<'EOF'
+aws ec2 wait instance-status-ok  \
+	--profile ${var.aws_profile} \
+	--region ${var.aws_region}  \
+	--instance-ids ${aws_instance.service.id}
+EOF
+EOP
+  }
+
+  #Execute ansible playbook
+  provisioner "local-exec" {
+    command = "sleep 20 && cd ../ansible/ && ansible-playbook -i all.host all.yml -vvvvv"
   }
 
 }

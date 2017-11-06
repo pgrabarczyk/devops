@@ -1,4 +1,5 @@
 ---
+- include: wait_for_ec2.yml
 - include: ubuntu_update.yml
 - include: install_jdk_ubuntu.yml
 - include: copy_and_execute_jar.yml
