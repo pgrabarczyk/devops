@@ -19,5 +19,12 @@ variable "log_group_name" {}
 variable "log_stream_name" {}
 
 #IAM
-variable "log_role_name" {}
-variable "log_policy_name" {}
+variable "ec2_log_role_name" {}
+variable "ec2_log_policy_name" {}
+
+variable "es_log_role_name" {}
+variable "es_log_policy_name" {}
+
+#Lambda
+variable "lambda_name" {}
+variable "lambda_permission_principal" {}

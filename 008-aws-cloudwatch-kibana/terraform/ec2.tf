@@ -20,7 +20,7 @@ resource "aws_instance" "service" {
   key_name = "${aws_key_pair.auth.id}"
   vpc_security_group_ids = ["${aws_security_group.service.id}"]
   subnet_id = "${aws_subnet.public.id}"
-  iam_instance_profile = "${aws_iam_instance_profile.iam_instance_profile.id}"
+  iam_instance_profile = "${aws_iam_instance_profile.service.id}"
 
   tags {
     Name = "${var.appname}-service"
@@ -52,7 +52,7 @@ EOP
 
   #Execute ansible playbook
   provisioner "local-exec" {
-    command = "sleep 20 && cd ../ansible/ && ansible-playbook -i all.host all.yml -vvvvv"
+    command = "sleep 20 && cd ../ansible/ && export ANSIBLE_HOST_KEY_CHECKING=False && ansible-playbook -i all.host all.yml > ansible.log"
   }
 
 }

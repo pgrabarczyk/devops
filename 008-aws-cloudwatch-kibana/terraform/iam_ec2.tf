@@ -1,6 +1,6 @@
-resource "aws_iam_role_policy" "iam_role_policy" {
-  name = "${var.log_policy_name}"
-  role = "${aws_iam_role.iam_role.id}"
+resource "aws_iam_role_policy" "service" {
+  name = "${var.ec2_log_policy_name}"
+  role = "${aws_iam_role.service.id}"
 
   policy = <<EOF
 {
@@ -21,8 +21,8 @@ resource "aws_iam_role_policy" "iam_role_policy" {
 EOF
 }
 
-resource "aws_iam_role" "iam_role" {
-  name = "${var.log_role_name}"
+resource "aws_iam_role" "service" {
+  name = "${var.ec2_log_role_name}"
 
   assume_role_policy = <<EOF
 {
@@ -41,7 +41,7 @@ resource "aws_iam_role" "iam_role" {
 EOF
 }
 
-resource "aws_iam_instance_profile" "iam_instance_profile" {
-  name = "${var.log_role_name}"
-  role = "${aws_iam_role.iam_role.name}"
+resource "aws_iam_instance_profile" "service" {
+  name = "${var.ec2_log_role_name}"
+  role = "${aws_iam_role.service.name}"
 }

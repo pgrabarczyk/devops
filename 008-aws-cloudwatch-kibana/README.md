@@ -123,3 +123,10 @@ ssh-keygen
 and place it in my .ssh directory.
 When terraform execute it's use this key.
 In this case I don't have to set key param in ansbile/ssh.
+
+##### Ansible want to exchange ssh key while executing script and I cannot find when
+Disable key exchange using shell command:
+
+```
+export ANSIBLE_HOST_KEY_CHECKING=False
+```
