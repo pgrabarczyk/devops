@@ -1,7 +1,7 @@
 resource "aws_security_group" "service" {
   name = "${var.appname}_sg_service"
   description = "sg for service"
-  vpc_id = "${aws_vpc.vpc.id}"
+  vpc_id = "${var.vpc_id}"
 
   #SSH
   ingress {

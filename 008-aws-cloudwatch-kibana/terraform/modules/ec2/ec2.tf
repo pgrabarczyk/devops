@@ -19,7 +19,7 @@ resource "aws_instance" "service" {
   ami = "${data.aws_ami.ubuntu.id}"
   key_name = "${aws_key_pair.auth.id}"
   vpc_security_group_ids = ["${aws_security_group.service.id}"]
-  subnet_id = "${aws_subnet.public.id}"
+  subnet_id = "${var.subnet_id}"
   iam_instance_profile = "${aws_iam_instance_profile.service.id}"
 
   tags {

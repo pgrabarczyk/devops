@@ -19,10 +19,10 @@ log_group_name="pgrabarczyk-lg"
 log_stream_name="pgrabarczyk-ls"
 
 #IAM
-ec2_log_role_name="EC2-cloudwatch-role"
+ec2_log_role_name="EC2-cloudwatch-role-1"
 ec2_log_policy_name="ec2-cloudwatch-policy"
 
-es_log_role_name="lambda-elasticsearch-role"
+es_log_role_name="lambda-elasticsearch-role-1"
 es_log_policy_name="lambda-elasticsearch-policy"
 
 #Lambda

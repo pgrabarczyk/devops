@@ -60,7 +60,10 @@ Notice that terraform generate files:
 - ../ansible/script/aws_ec2_wait.sh script that will use AWS CLI to wait for EC2 status
 
 Then terraform execute ansible main playbook.
-
+You can check for ansible logs in
+```
+ansbile/ansible.log
+```
 
 #### Ansible execution
 

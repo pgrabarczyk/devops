@@ -65,13 +65,13 @@ resource "aws_lambda_permission" "cloudwatch_allow" {
   action = "lambda:InvokeFunction"
   function_name = "${aws_lambda_function.cwl_stream_lambda.arn}"
   principal = "${var.lambda_permission_principal}"
-  source_arn = "${aws_cloudwatch_log_group.service.arn}"
+  source_arn = "${var.cloud_watch_log_group_arn}"
 }
 
 resource "aws_cloudwatch_log_subscription_filter" "cloudwatch_logs_to_es" {
   depends_on = ["aws_lambda_permission.cloudwatch_allow"]
   name            = "cloudwatch_logs_to_elasticsearch"
-  log_group_name  = "${aws_cloudwatch_log_group.service.name}"
+  log_group_name  = "${var.cloud_watch_log_group_name}"
   filter_pattern  = ""
   destination_arn = "${aws_lambda_function.cwl_stream_lambda.arn}"
 }
