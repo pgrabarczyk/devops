@@ -2,7 +2,7 @@
 
 ### Project in progress / TODO
 
-- Add elasticsearch in terraform
+- refactor terraform
 - results of elasticsearch (screenshoot?) in readme
 - refactor ansible playbook
 - refactor to keep ansible and terraform settings (eg. region in 1 file)
