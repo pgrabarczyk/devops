@@ -1,12 +1,5 @@
 # 008-aws-cloudwatch-kibana
 
-### Project in progress / TODO
-
-- refactor terraform
-- results of elasticsearch (screenshoot?) in readme
-- refactor ansible playbook
-- refactor to keep ansible and terraform settings (eg. region in 1 file)
-
 ### Execute
 
 ```
@@ -100,6 +93,18 @@ Will install agent for sending logs to cloudwatch
 Now you should be able to see logs using AWS console in Cloudwatch.
 ![cloudwatch](https://github.com/pgrabarczyk/devops/raw/master/008-aws-cloudwatch-kibana/img/cloudwatch.png)
 
+##### Lambda
+You should be able to check lambda function that send logs from Cloudwatch to ElasticSearch.
+![lambda](https://github.com/pgrabarczyk/devops/raw/master/008-aws-cloudwatch-kibana/img/lambda.png)
+
+##### Check your elasticsearch
+You should be able to get your kibana link from AWS elasticsearch service.
+You can check that logs from cloudwatch are in ES by developer tools in kibana and execute query.
+![kibana](https://github.com/pgrabarczyk/devops/raw/master/008-aws-cloudwatch-kibana/img/kibana.png)
+
+##### Future steps
+Now you can configure kibana to get visualization of your logs.
+
 ### Clean up (Destroy AWS environment)
 ```
 cd ../terraform
@@ -117,6 +122,14 @@ aws-cli/1.11.13 Python/3.5.2 Linux/4.10.0-37-generic botocore/1.4.70
 ```
 
 ### Troubleshooting
+
+##### No logs in cloudwatch
+I temporary had bug that not execute ansible from terraform.
+If it would happen again just execute ansible from ansible directory:
+```text
+cd ansible
+ansible-playbook all.yml -i all.host
+```
 
 ##### "Permission denied (publickey)." when SSH to EC2
 I generated ssh key using
