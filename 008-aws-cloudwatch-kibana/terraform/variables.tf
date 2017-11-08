@@ -28,3 +28,5 @@ variable "es_log_policy_name" {}
 #Lambda
 variable "lambda_name" {}
 variable "lambda_permission_principal" {}
+variable "lambda_function_name" {}
+variable "lambda_filename_zip" {}

@@ -35,7 +35,10 @@ module "es" {
 
   lambda_name = "${var.lambda_name}"
   lambda_permission_principal = "${var.lambda_permission_principal}"
+  lambda_filename_zip = "${var.lambda_filename_zip}"
+  lambda_function_name = "${var.lambda_function_name}"
 
   es_log_role_name = "${var.es_log_role_name}"
   es_log_policy_name = "${var.es_log_policy_name}"
+
 }

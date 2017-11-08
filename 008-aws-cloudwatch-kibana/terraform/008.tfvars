@@ -4,7 +4,7 @@ aws_shared_credentials_file="/home/pgrabarczyk/.aws/credentials"
 aws_profile="pgrabarczyk-sandbox"
 
 #SecurityGroups
-devCIDR="91.200.34.50/32" #Should be changed for security reasons onto your IP
+devCIDR="0.0.0.0/0" #Should be changed for security reasons onto your IP
 appname="pgrabarczyk"
 
 #key_pair
@@ -28,3 +28,5 @@ es_log_policy_name="lambda-elasticsearch-policy"
 #Lambda
 lambda_name="LogsToElasticsearch"
 lambda_permission_principal="logs.eu-west-1.amazonaws.com"
+lambda_function_name="cwl2es" #filename of .js where is source of lambda
+lambda_filename_zip="cwl2eslambda.zip"
