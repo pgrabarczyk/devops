@@ -23,27 +23,10 @@ Execute of Terraform apply creates:
 - EC2
 - CloudWatch LogGroup
 - CloudWatch LogStream
+- ElasticSearch
+- Lambda function (send logs from CloudWatch to ElasticSearch)
 
-IAM Role for EC2 with policy looks:
-```
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Action": [
-        "logs:CreateLogGroup",
-        "logs:CreateLogStream",
-        "logs:PutLogEvents",
-        "logs:DescribeLogStreams"
-      ],
-      "Resource": "arn:aws:logs:*:*:*"
-    }
-  ]
-}
-```
-
-That's why to execute this terraform your user need to have role:
+Terraform creates also policies and IAM roles, that's why to execute this terraform your user need to have role:
 ```
 iam:CreateRole
 ```

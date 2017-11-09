@@ -1,48 +1,13 @@
 resource "aws_iam_role" "cloudwatch_logs_to_es" {
   name = "${var.es_log_role_name}"
 
-  assume_role_policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Principal": {
-        "Service": "lambda.amazonaws.com"
-      },
-      "Effect": "Allow"
-    }
-  ]
-}
-EOF
+  assume_role_policy = "${data.template_file.iam-role-cw-to-es.rendered}"
 }
 
 resource "aws_iam_role_policy" "cloudwatch_logs_to_es" {
   name = "${var.es_log_policy_name}"
   role = "${aws_iam_role.cloudwatch_logs_to_es.id}"
-  policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Action": [
-        "logs:CreateLogGroup",
-        "logs:CreateLogStream",
-        "logs:PutLogEvents"
-      ],
-      "Resource": [
-        "arn:aws:logs:*:*:*"
-      ]
-    },
-    {
-      "Effect": "Allow",
-      "Action": "es:ESHttpPost",
-      "Resource": "arn:aws:es:*:*:*"
-    }
-  ]
-}
-EOF
+  policy = "${data.template_file.iam-role-policy-cw-to-es.rendered}"
 }
 
 resource "aws_lambda_function" "cloudwatch_logs_to_es" {
@@ -58,6 +23,7 @@ resource "aws_lambda_function" "cloudwatch_logs_to_es" {
       es_endpoint = "${aws_elasticsearch_domain.es.endpoint}"
     }
   }
+
 }
 
 resource "aws_lambda_permission" "cloudwatch_logs_to_es" {

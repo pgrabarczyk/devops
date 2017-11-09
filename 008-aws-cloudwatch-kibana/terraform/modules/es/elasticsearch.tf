@@ -16,28 +16,6 @@ resource "aws_elasticsearch_domain" "es" {
     Name = "${var.appname}-es"
   }
 
-  access_policies = <<CONFIG
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Principal": {
-        "AWS": "*"
-      },
-      "Action": [
-        "es:*"
-      ],
-      "Condition": {
-        "IpAddress": {
-          "aws:SourceIp": [
-            "${var.devCIDR}"
-          ]
-        }
-      }
-    }
-  ]
-}
-CONFIG
+  access_policies = "${data.template_file.iam-role-elasticsearch.rendered}"
 
 }
