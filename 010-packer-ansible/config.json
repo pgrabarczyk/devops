@@ -1,0 +1,26 @@
+{
+  "builders": [
+    {
+      "type": "amazon-ebs",
+      "region": "eu-west-1",
+      "source_ami": "ami-add175d4",
+      "instance_type": "t2.micro",
+      "ssh_username": "ubuntu",
+      "ami_name": "ubuntu-2"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "ansible",
+      "ansible_env_vars": [ "ANSIBLE_HOST_KEY_CHECKING=False" ],
+      "playbook_file" :"./install_jdk_ubuntu.yml",
+      "user" : "ubuntu",
+      "extra_arguments": [
+        "-vvvv",
+        "-e ansible_python_interpreter=/usr/bin/python3"
+      ]
+
+
+    }
+  ]
+}

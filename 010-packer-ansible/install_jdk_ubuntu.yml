@@ -1,0 +1,58 @@
+---
+- hosts: all
+  become: yes
+  remote_user: ubuntu
+  gather_facts: yes
+  vars:
+    username: "ubuntu"
+    java_home_path: "/opt/java"
+    jdk_url: "http://download.oracle.com/otn-pub/java/jdk/8u151-b12/e758a0de34e24606bca991d704f6dcbf/jdk-8u151-linux-x64.tar.gz"
+    jdk_tar_path: "/usr/src/jdk-8u151-linux-x64.tar.gz"
+    java_home_script_path: "/etc/profile.d/java_home.sh"
+  tasks:
+    - name: install packages
+      apt:
+        name: "{{ item }}"
+        state: latest
+        update_cache: yes
+      with_items:
+        - htop
+        - wget
+        - unzip
+    - name: "Check {{ java_home_path }} exists"
+      stat:
+        path: "{{ java_home_path }}"
+      register: java_home_result
+    - name: Download JDK
+      get_url:
+        url: " {{ jdk_url }}"
+        dest: "{{ jdk_tar_path }}"
+        validate_certs: no
+        headers: 'Cookie: oraclelicense=accept-securebackup-cookie'
+      when: java_home_result.stat.exists == False
+    - name: "Create {{ java_home_path }} for jdk"
+      file: path={{ java_home_path }} state=directory
+      when: java_home_result.stat.exists == False
+    - name: "Install JDK in {{ java_home_path }}"
+      unarchive:
+        src: "{{ jdk_tar_path }}"
+        dest: "{{ java_home_path }}"
+        remote_src: yes
+        owner: "{{ username }}"
+        group: "{{ username }}"
+        extra_opts: [--strip-components=1]
+      when: java_home_result.stat.exists == False
+    - name: "Check is java_home script exists"
+      stat:
+        path: "{{ java_home_script_path }}"
+      register: java_home_script
+    - name: "Update JAVA_HOME and PATH environments varriable"
+      blockinfile:
+        create: yes
+        path: "{{ java_home_script_path }}"
+        mode: "+x"
+        block: |
+          #!/bin/sh
+          export JAVA_HOME="{{ java_home_path }}"
+          export PATH=$JAVA_HOME/bin:$PATH
+      when: java_home_script.stat.exists == False
